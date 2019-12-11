@@ -22,6 +22,7 @@ echo '1. System1'
 echo '2. System2'
     read system
 echo The system you are adding $username to is ZLP$system
+lowercase=$(echo "$username" | tr '[:upper:]' '[:lower:]')
 
 # Set the Zowe z/OSMF Profile to the correct target system for the new UserID
 if [ "$system" -eq 1 ]; then
@@ -207,7 +208,7 @@ zowe zos-files upload stdin-to-data-set "DANJAST.JCL(ZWEUSER6)" <<EOF
 //SYSLBC    DD   DSN=SYS1.BRODCAST,DISP=SHR                         
 //SYSTSPRT  DD   SYSOUT=*                                           
 //SYSTSIN   DD   *                                                                                       
-ALU ($username) OMVS(AUTOUID  HOME('/u/$username') PROGRAM('/bin/sh')) 
+ALU ($username) OMVS(AUTOUID  HOME('/u/$lowercase') PROGRAM('/bin/sh')) 
 /*                                                                                                                                                                                                                                                                           
 EOF
 
